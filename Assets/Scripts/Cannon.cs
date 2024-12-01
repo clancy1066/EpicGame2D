@@ -32,7 +32,7 @@ public class Cannon : SpriteAnim
         // TODO
         switch (state)
         {
-            // TODO
+            // TODO 3
             case CANNON_STATE.IDLE:     ExecuteIDLE();   break;
             case CANNON_STATE.SHOOT:    ExecuteSHOOT (); break;
             case CANNON_STATE.SMOKE1:   ExecuteSMOKE1(); break;
