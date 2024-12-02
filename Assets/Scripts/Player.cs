@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     
 
     bool flipX = false;
+    public bool falling = false;
 
     SpriteRenderer  theSpriteRenderer;
     Rigidbody2D     theRB;
@@ -32,9 +34,21 @@ public class Player : MonoBehaviour
         Debug.Log($"FlipX: {theSpriteRenderer.flipX}, FlipY: {theSpriteRenderer.flipY}");
     }
 
+    void SetAnimationParamBool(string triggerName,bool value)
+    {
+        theAnimator.SetBool("move", false);
+        theAnimator.SetBool("jump", false);
+        theAnimator.SetBool("falling", false);
+        theAnimator.SetBool("jump", false);
+
+        theAnimator.SetBool(triggerName, value);
+      
+    }
+
     // Update is called once per frame
    public void Execute()
     {
+        // If in the middle of a jump, just return
         if (jumpTimer > 0)
         {
             jumpTimer -= Time.deltaTime;
@@ -42,28 +56,36 @@ public class Player : MonoBehaviour
             if (jumpTimer > 0)
                 return;
 
-            theAnimator.SetBool("jump", false);
-
+            SetAnimationParamBool("jump", false);
         }
+        falling = false; 
 
-        // Always check for a jump first
-        if (Input.GetKeyDown(KeyCode.Space))
+        // See if we are falling before checking for Jump
+        if (theRB.velocity.y < -0.5f)
         {
-            Vector2 jumpDir  = Vector2.up * jumpStrength;
+            falling = true;
+        }
+        else
+        {
+            // Always check for a jump before trying to move
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Vector2 jumpDir = Vector2.up * jumpStrength;
 
-           // theRB.velocity *= 0;
-            theRB.AddForce(jumpDir);
+                // theRB.velocity *= 0;
+                theRB.AddForce(jumpDir);
 
-            theAnimator.SetBool("move", false);
-            theAnimator.SetBool("jump", true);
+                SetAnimationParamBool("jump", true);
 
-            jumpTimer = jumpInterval;
+                jumpTimer = jumpInterval;
 
-            return;
+                return;
+            }
         }
 
-        
-        
+        // After the jump check
+        SetAnimationParamBool("falling", falling);
+
         float incX = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
      //   incX = 1;
 
@@ -94,12 +116,18 @@ public class Player : MonoBehaviour
             if (rbVel.x > maxSpeed)
             {
                 theRB.velocity = rbVel.normalized * maxSpeed;
+
+        
             }
         }
 
+        float linearDrag = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) ? 0.05f:0.95f);
+
+        theRB.drag = linearDrag;
+
         bool  doMove = false;
 
-        if (theRB.velocity.magnitude > 0.2f)
+        if (theRB.velocity.magnitude > 0.01f)
             doMove = true;
         else
         {
@@ -113,10 +141,13 @@ public class Player : MonoBehaviour
 
         theRB.AddForce(dir);
 
+        float animSpeed = 2.5f*(Mathf.Abs(theRB.velocity.magnitude) / maxSpeed);
 
-       // if (doMove != isMoving)
-       // {
-       //     isMoving = doMove;
+    //    theAnimator.speed = animSpeed;
+        // if (doMove != isMoving)
+        // {
+        //     isMoving = doMove;
+        if (!falling)
             theAnimator.SetBool("move", doMove);
 
          //   if (!doMove)

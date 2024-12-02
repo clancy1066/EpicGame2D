@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8593308211428889341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.48, y: 0.48000002, z: 0}
+  m_LocalPosition: {x: 0.79999995, y: 0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,6 +51,8 @@ MonoBehaviour:
   maxSpeed: 50
   jumpStrength: 200
   speedMod: 100
+  falling: 0
+  jumpInterval: 0.3
 --- !u!212 &4065215372968598140
 SpriteRenderer:
   m_ObjectHideFlags: 0
