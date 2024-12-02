@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     public float jumpStrength = 1;
     public float speedMod = 0.1f;
     
-
     bool flipX = false;
     public bool falling = false;
 
@@ -83,6 +82,9 @@ public class Player : MonoBehaviour
             }
         }
 
+        bool moveHorizontal = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow));
+
+
         // After the jump check
         SetAnimationParamBool("falling", falling);
 
@@ -104,7 +106,7 @@ public class Player : MonoBehaviour
             if (dir.x > 0.1)
                 flipX = false;
         }
-            Vector2 rbVel = theRB.velocity;
+        Vector2 rbVel = theRB.velocity;
 
         if (Vector2.Dot(dir, rbVel) < 0.0f)
         {
@@ -121,7 +123,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        float linearDrag = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) ? 0.05f:0.95f);
+        float linearDrag = (moveHorizontal ? 0.0f:5f);
+        
+
+        if (!moveHorizontal)
+        { 
+            rbVel.x = 0.0f;
+
+            theRB.velocity = rbVel;
+        }
 
         theRB.drag = linearDrag;
 
@@ -141,12 +151,7 @@ public class Player : MonoBehaviour
 
         theRB.AddForce(dir);
 
-        float animSpeed = 2.5f*(Mathf.Abs(theRB.velocity.magnitude) / maxSpeed);
-
-    //    theAnimator.speed = animSpeed;
-        // if (doMove != isMoving)
-        // {
-        //     isMoving = doMove;
+        
         if (!falling)
             theAnimator.SetBool("move", doMove);
 
