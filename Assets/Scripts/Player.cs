@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -34,7 +33,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Execute()
+   public void Execute()
     {
         if (jumpTimer > 0)
         {
@@ -83,24 +82,24 @@ public class Player : MonoBehaviour
             if (dir.x > 0.1)
                 flipX = false;
         }
-            Vector2 rbVel = theRB.linearVelocity;
+            Vector2 rbVel = theRB.velocity;
 
         if (Vector2.Dot(dir, rbVel) < 0.0f)
         {
-            theRB.linearVelocity = rbVel * 0.5f;
+            theRB.velocity = rbVel * 0.5f;
 
         }
         else
         {
             if (rbVel.x > maxSpeed)
             {
-                theRB.linearVelocity = rbVel.normalized * maxSpeed;
+                theRB.velocity = rbVel.normalized * maxSpeed;
             }
         }
 
         bool  doMove = false;
 
-        if (theRB.linearVelocity.magnitude > 0.2f)
+        if (theRB.velocity.magnitude > 0.2f)
             doMove = true;
         else
         {

@@ -1,4 +1,4 @@
-using NUnit;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +43,7 @@ public class SpriteAnim : MonoBehaviour
         spriteRenderer.sprite = frames[newFrame];
     }
 
-    public void Execute()
+    virtual public void Execute()
     {
         if (!loopAtStart)
             return;

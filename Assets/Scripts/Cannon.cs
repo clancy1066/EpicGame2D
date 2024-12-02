@@ -27,7 +27,7 @@ public class Cannon : SpriteAnim
     }
 
     // Update is called once per frame
-    void Execute()
+    override public void  Execute()
     {
         // TODO
         switch (state)
