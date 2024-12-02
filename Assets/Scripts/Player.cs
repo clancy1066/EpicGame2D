@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool simulates = false;
     public float maxSpeed = 1;
     public float jumpStrength = 1;
     public float speedMod = 0.1f;
@@ -23,10 +24,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        theSpriteRenderer = GetComponent<SpriteRenderer>();
-        theRB = GetComponent<Rigidbody2D>();    
-        theAnimator = GetComponent<Animator>();
+        theSpriteRenderer   = GetComponent<SpriteRenderer>();
+        theRB               = GetComponent<Rigidbody2D>();    
+        theAnimator         = GetComponent<Animator>();
 
+        theRB.gameObject.SetActive(simulates);
      //   theSpriteRenderer.flipX = true;
      //   theSpriteRenderer.flipY = true;
 
@@ -47,6 +49,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
    public void Execute()
     {
+        if (!simulates)
+            return;
+
         // If in the middle of a jump, just return
         if (jumpTimer > 0)
         {

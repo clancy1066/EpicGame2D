@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class SpriteAnim : MonoBehaviour
 {
-    SpriteRenderer  spriteRenderer;
+
+    protected SpriteRenderer spriteRenderer;
 
     [SerializeField]
-    Sprite[] frames;
+    protected Sprite[] frames;
 
     [SerializeField]
     bool loopAtStart = false;
@@ -16,7 +17,10 @@ public class SpriteAnim : MonoBehaviour
     [SerializeField]
     protected float frameHoldTime = 2.0f;
 
-    protected int      curFrame = 0;
+    // Made these puvblic for the animation
+    public bool changeNow = false;
+    public int          curFrame = 0;
+   
     protected float    stateTimer = -1.0f;
 
     // Start is called before the first frame update
@@ -43,8 +47,18 @@ public class SpriteAnim : MonoBehaviour
         spriteRenderer.sprite = frames[newFrame];
     }
 
-    virtual public void Execute()
+    private void Update()
     {
+        if (changeNow)
+        {
+            changeNow = false;
+            ChangeFrame(curFrame);
+            stateTimer = frameHoldTime;
+        }
+    }
+
+    virtual public void Execute()
+    { 
         if (!loopAtStart)
             return;
 
