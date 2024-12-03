@@ -6,17 +6,10 @@ public class Room : MonoBehaviour
 {
     [SerializeField]
     GameObject  playerStart;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    [SerializeField]
+    float completionTime = 120.0f;
 
     public Vector2 GetPlayerStartPosition()
     {
@@ -24,5 +17,12 @@ public class Room : MonoBehaviour
             return transform.position;
 
         return playerStart.transform.position;
+    }
+
+    public float GetCompletionTime()
+    {
+       
+
+        return completionTime;
     }
 }

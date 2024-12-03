@@ -29,6 +29,8 @@ public class Director : MonoBehaviour
     DIRECTOR_STATE state = DIRECTOR_STATE.BEGIN_PLAY;
     bool stateChanged;
 
+    float completionTime;
+
     StateMachineLite<DIRECTOR_STATE> sml;
 
     // Start is called before the first frame update
@@ -37,10 +39,14 @@ public class Director : MonoBehaviour
         sml = new StateMachineLite<DIRECTOR_STATE>();
 
         if (currentRoom != null)
+        {
             npcs = currentRoom.GetComponentsInChildren<SpriteAnim>();
 
+            completionTime = currentRoom.GetCompletionTime();
+        }
+
         if (levelTimerText != null)
-            levelTimerText.text = "42";
+            levelTimerText.text = completionTime.ToString();
 
     }
 
@@ -69,7 +75,12 @@ public class Director : MonoBehaviour
     }
     void UpdateEXECUTE()
     {
-        if (player != null)
+         completionTime -= Time.deltaTime;
+
+         if (levelTimerText != null)
+             levelTimerText.text = completionTime.ToString();
+
+         if (player != null)
             player.Execute();
 
         if (npcs != null)
