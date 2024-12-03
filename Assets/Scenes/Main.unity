@@ -637,6 +637,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 628073677}
     m_Modifications:
+    - target: {fileID: 718989302421700478, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
+      propertyPath: initialState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2962377541554929502, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
       propertyPath: m_Name
       value: Pickup
@@ -655,7 +659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3965944274880184212, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.004
+      value: 0.102
       objectReference: {fileID: 0}
     - target: {fileID: 3965944274880184212, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -688,6 +692,14 @@ PrefabInstance:
     - target: {fileID: 3965944274880184212, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581510372512725894, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248126262815357100, guid: a3e4f30d941d9024eae6096d49944c7f, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

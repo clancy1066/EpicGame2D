@@ -32,7 +32,7 @@ public class Pickup : SpriteAnim
 
         sml.ChangeState(ref state, initialState);
 
-        circleColliders = GetComponents<CircleCollider2D>();
+        circleColliders = GetComponentsInChildren<CircleCollider2D>();
 
         theRB = GetComponent<Rigidbody2D>();
 
