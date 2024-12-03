@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
     [SerializeField]
     GameObject  playerStart;
+
+    [SerializeField]
+    Canvas wsCanvas;
 
 
     [SerializeField]
@@ -20,9 +24,14 @@ public class Room : MonoBehaviour
     }
 
     public float GetCompletionTime()
-    {
-       
-
+    { 
         return completionTime;
     }
+
+    public Canvas GetCanvas()
+    {
+        return wsCanvas;
+    }
+
+
 }

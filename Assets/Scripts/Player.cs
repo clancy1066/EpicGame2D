@@ -122,7 +122,8 @@ public class Player : MonoBehaviour
         {
             if (rbVel.x > maxSpeed)
             {
-                theRB.velocity = rbVel.normalized * maxSpeed;
+                rbVel.x = rbVel.normalized.x * maxSpeed;
+                theRB.velocity = rbVel;
 
         
             }

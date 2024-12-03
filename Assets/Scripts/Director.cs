@@ -19,9 +19,7 @@ public class Director : MonoBehaviour
 
     SpriteAnim[] npcs;
 
-    [SerializeField]
     Canvas uiCanvas;
-
 
     [SerializeField]
     Canvas wsCanvas;
@@ -54,8 +52,8 @@ public class Director : MonoBehaviour
     {
         instance = this;
 
-  //      if (floatingTextTemplate != null)
-  //          floatingTextTemplate.gameObject.SetActive(false);
+        if (floatingTextTemplate != null)
+            floatingTextTemplate.gameObject.SetActive(false);
 
         sml = new StateMachineLite<DIRECTOR_STATE>();
 
@@ -64,6 +62,7 @@ public class Director : MonoBehaviour
             npcs = currentRoom.GetComponentsInChildren<SpriteAnim>();
 
             completionTime = currentRoom.GetCompletionTime();
+            wsCanvas = currentRoom.GetCanvas();
         }
         UpdateTime();
 
@@ -135,6 +134,20 @@ public class Director : MonoBehaviour
     // ************************************
     // statics for external use    
     // ************************************
+    static public void DropPickup(Vector2 AtPos,Pickup pickup)
+    {
+        if (pickup != null)
+        {
+            Pickup toDrop = Instantiate(pickup) as Pickup;
+
+            toDrop.transform.position = AtPos;
+            toDrop.gameObject.SetActive(true);
+            
+            toDrop.transform.SetParent(instance.currentRoom.transform);
+            toDrop.transform.localScale = Vector3.one;
+        }
+    }
+
     static public void ShowFloatingText(Vector2 pos,string textToFloat)
     {
         TextMeshProUGUI newText = Instantiate(instance.floatingTextTemplate);

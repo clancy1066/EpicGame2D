@@ -13,7 +13,9 @@ public enum PICKUP_STATE
 
 
 public class Pickup : SpriteAnim
-{ 
+{
+    static Pickup instance;
+
     CircleCollider2D[]  circleColliders;
     Rigidbody2D         theRB;
 
@@ -23,10 +25,23 @@ public class Pickup : SpriteAnim
 
     StateMachineLite<PICKUP_STATE> sml;
 
+    [SerializeField]
+    int value = 1;
+
+    [SerializeField]
+    float  presentPushForce= 100;
+
+    [SerializeField]
+    float presentPeriod = 1;
+
+    private PICKUP_STATE stateMachine;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+
+        instance = this;
 
         sml = new StateMachineLite<PICKUP_STATE>();
 
@@ -53,6 +68,11 @@ public class Pickup : SpriteAnim
                 theRB.Sleep();
         }
     }
+
+    public void Present()
+    {
+        sml.ChangeState(ref state, PICKUP_STATE.PRESENTING);
+    }
     // Update is called once per frame
      public override void Execute()
     {
@@ -66,7 +86,23 @@ public class Pickup : SpriteAnim
     }
 
     void UpdatePRESENTING()
-    {}
+    {
+        if (sml.DidStateChange())
+        {
+            theRB.WakeUp();
+
+            theRB.AddForceY(presentPushForce);
+
+            stateTimer = presentPeriod;
+
+            return;
+        }
+
+        stateTimer -= Time.deltaTime;
+
+        if (stateTimer<0)
+            sml.ChangeState(ref state, PICKUP_STATE.AWAITING_PICKUP);
+    }
 
     void UpdateAWAITING_PICKUP()
     {
@@ -88,7 +124,9 @@ public class Pickup : SpriteAnim
 
         JukeBox.PlayClip(AUDIO_LOOKUP.PICKUP_SKULL);
 
-        Director.ShowFloatingText(transform.position, "+10");
+        string textToShow = "+" + value.ToString(); 
+
+        Director.ShowFloatingText(transform.position, textToShow);
 
         Destroy(gameObject);
     }
