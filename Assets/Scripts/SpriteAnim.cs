@@ -42,6 +42,8 @@ public class SpriteAnim : MonoBehaviour
         if (spriteRenderer == null)
             return;
 
+        if (frames.Length == 0)
+            return;
         newFrame %= frames.Length;
 
         spriteRenderer.sprite = frames[newFrame];

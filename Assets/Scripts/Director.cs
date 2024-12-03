@@ -29,11 +29,15 @@ public class Director : MonoBehaviour
     DIRECTOR_STATE state = DIRECTOR_STATE.BEGIN_PLAY;
     bool stateChanged;
 
+    StateMachineLite<DIRECTOR_STATE> sml;
+
     // Start is called before the first frame update
     void Start()
     {
+        sml = new StateMachineLite<DIRECTOR_STATE>();
+
         if (currentRoom != null)
-            npcs = currentRoom.GetComponents<SpriteAnim>();
+            npcs = currentRoom.GetComponentsInChildren<SpriteAnim>();
 
         if (levelTimerText != null)
             levelTimerText.text = "42";
@@ -46,30 +50,11 @@ public class Director : MonoBehaviour
         switch (state)
         {
             case DIRECTOR_STATE.BEGIN_PLAY: UpdateBEGIN_PLAY(); break;
-            case DIRECTOR_STATE.EXECUTE: UpdateEXECUTE(); break;
-            case DIRECTOR_STATE.END_PLAY: UpdateEND_PLAY(); break;
+            case DIRECTOR_STATE.EXECUTE:    UpdateEXECUTE(); break;
+            case DIRECTOR_STATE.END_PLAY:   UpdateEND_PLAY(); break;
 
         }
        
-
-    }
-
-
-    // ****************************
-    // State Machine helpers
-    // ****************************
-    void ChangeState(DIRECTOR_STATE newstate)
-    {
-        state = newstate;
-        stateChanged = true;
-    }
-
-    bool DidStateChange()
-    {
-        bool retVal = stateChanged;
-
-        stateChanged = false;
-        return retVal;
     }
 
     // ****************************
@@ -80,7 +65,7 @@ public class Director : MonoBehaviour
         if (player != null)
             player.transform.position = currentRoom.GetPlayerStartPosition();
 
-        ChangeState(DIRECTOR_STATE.EXECUTE);
+        sml.ChangeState(ref state,DIRECTOR_STATE.EXECUTE);
     }
     void UpdateEXECUTE()
     {
