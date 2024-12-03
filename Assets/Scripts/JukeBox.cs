@@ -6,6 +6,7 @@ using UnityEngine;
 public enum AUDIO_LOOKUP
 {
     CHEST_OPEN
+,   PICKUP_SKULL   
 }
 
 [System.Serializable]

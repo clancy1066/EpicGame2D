@@ -85,5 +85,11 @@ public class Pickup : SpriteAnim
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Pickup TriggerEnter2D");
+
+        JukeBox.PlayClip(AUDIO_LOOKUP.PICKUP_SKULL);
+
+        Director.ShowFloatingText(transform.position, "+10");
+
+        Destroy(gameObject);
     }
 }
