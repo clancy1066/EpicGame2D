@@ -16,5 +16,6 @@ public class Switch : SpriteAnim
     private void OnTriggerEnter2D(Collider2D collision)
     {//
         animator.SetBool("open", true);
+        JukeBox.PlayClip(AUDIO_LOOKUP.CHEST_OPEN);
     }
 }
