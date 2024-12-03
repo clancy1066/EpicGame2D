@@ -143,7 +143,7 @@ public class Director : MonoBehaviour
         newText.gameObject.SetActive(true);
         newText.text = textToFloat;
 
-        newText.transform.parent = instance.wsCanvas.transform;
+        newText.transform.SetParent(instance.wsCanvas.transform);
 
         instance.StartCoroutine(instance.FloatAndFadeText(newText));
     }
